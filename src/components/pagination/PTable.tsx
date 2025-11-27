@@ -1,134 +1,63 @@
 // PaginatedUsers.tsx (React + TypeScript or plain JS with small edits)
-import React, { useEffect, useState, useCallback } from "react";
-
-type User = {
-  id: number;
-  email: string;
-  first_name: string;
-  last_name: string;
-  avatar: string;
-};
+import Loading from "../utility/Loading";
+import Selector from "./Selector";
+import ThemeButton from "./ThemeButton";
+import useUsers from "./useUsers";
+import Error from "../utility/Error";
+import PTableHeader from "./PTableHeader";
+import PTableRow from "./PTableRow";
+import PControls from "./PControls";
+import PTitle from "./PTitle";
 
 export default function PTable() {
-  const [page, setPage] = useState<number>(1);
-  const [perPage, setPerPage] = useState<number>(3); // try 3, 6, 12
-  const [data, setData] = useState<User[]>([]);
-  const [totalPages, setTotalPages] = useState<number>(1);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const fetchPage = useCallback(async (p: number, pp: number) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await fetch(
-        `https://reqres.in/api/users?page=${p}&per_page=${pp}`,
-        {
-          headers: {
-            "x-api-key": "reqres-free-v1",
-          },
-        }
-      );
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const json = await res.json();
-      // Resp shape: { page, per_page, total, total_pages, data: [...] }
-      setData(json.data);
-      setTotalPages(json.total_pages ?? 1);
-      // optional: prefetch next page
-      if (p < json.total_pages) {
-        fetch(`https://reqres.in/api/users?page=${p + 1}&per_page=${pp}`).catch(
-          () => {}
-        );
-      }
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err: any) {
-      setError(err.message || "Unknown error");
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  // Fetch when page or perPage change
-  useEffect(() => {
-    fetchPage(page, perPage);
-  }, [page, perPage, fetchPage]);
+  //here we call the custom hook to get all of our logic + setters
+  const {
+    page,
+    perPage,
+    data,
+    totalPages,
+    loading,
+    error,
+    setPage,
+    setPerPage,
+  } = useUsers();
 
   // When perPage changes, reset to page 1 (safer)
+  //used for selector and done for
   const handlePerPageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setPerPage(Number(e.target.value));
-    setPage(1); // simple UX: reset to first page
+    setPage(0); // simple UX: reset to first page
   };
+
+  /*  function handleClick() {
+    setCount(count + 1); // count = 0; 0 + 1 = 1
+    setCount((prev) => prev + 1); // count = 0; 0 + 1 = 1
+  } */
+
+  if (loading) return <Loading />;
+  if (error) return <Error err={error} />;
 
   return (
     <div>
-      <h2>
-        Users (page {page} / {totalPages})
-      </h2>
+      <PTitle page={page} totalPages={totalPages} />
 
-      <label>
-        Rows per page:
-        <select value={perPage} onChange={handlePerPageChange}>
-          <option value={3}>3</option>
-          <option value={6}>6</option>
-          <option value={12}>12</option>
-        </select>
-      </label>
+      {/* <h1>{count}</h1>
+      <button onClick={handleClick}>click me</button> */}
 
-      {loading ? (
-        <div>Loading…</div>
-      ) : error ? (
-        <div role="alert">Error: {error}</div>
-      ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Email</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((u) => (
-              <tr key={u.id}>
-                <td>{u.id}</td>
-                <td>
-                  {u.first_name} {u.last_name}
-                </td>
-                <td>{u.email}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+      <Selector perPage={perPage} handleChange={handlePerPageChange} />
 
-      <div style={{ marginTop: 12 }}>
-        <button onClick={() => setPage(1)} disabled={page === 1}>
-          First
-        </button>
-        <button
-          onClick={() => setPage((p) => Math.max(1, p - 1))}
-          disabled={page === 1}
-        >
-          Prev
-        </button>
-        <span>
-          {" "}
-          Page {page} of {totalPages}{" "}
-        </span>
-        <button
-          onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-          disabled={page === totalPages}
-        >
-          Next
-        </button>
-        <button
-          onClick={() => setPage(totalPages)}
-          disabled={page === totalPages}
-        >
-          Last
-        </button>
-      </div>
+      <table>
+        <PTableHeader />
+        <tbody>
+          {data.map((u) => (
+            <PTableRow u={u} />
+          ))}
+        </tbody>
+      </table>
+
+      <PControls page={page} totalPages={totalPages} setPage={setPage} />
+
+      <ThemeButton />
     </div>
   );
 }
