@@ -1,13 +1,15 @@
 // PaginatedUsers.tsx (React + TypeScript or plain JS with small edits)
-import Loading from "../utility/Loading";
-import Selector from "./Selector";
-import ThemeButton from "./ThemeButton";
-import useUsers from "./useUsers";
-import Error from "../utility/Error";
+import Loading from "../Loading";
+import PSelector from "./PSelector";
+import ThemeButton from "../ThemeButton";
+import useUsers from "../../hooks/useUsers";
+import Error from "../Error";
 import PTableHeader from "./PTableHeader";
 import PTableRow from "./PTableRow";
 import PControls from "./PControls";
 import PTitle from "./PTitle";
+
+const tableHeaders: string[] = ["Id", "Name", "Email", "Avatar"];
 
 export default function PTable() {
   //here we call the custom hook to get all of our logic + setters
@@ -26,7 +28,7 @@ export default function PTable() {
   //used for selector and done for
   const handlePerPageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setPerPage(Number(e.target.value));
-    setPage(0); // simple UX: reset to first page
+    setPage(1); // simple UX: reset to first page
   };
 
   /*  function handleClick() {
@@ -44,10 +46,10 @@ export default function PTable() {
       {/* <h1>{count}</h1>
       <button onClick={handleClick}>click me</button> */}
 
-      <Selector perPage={perPage} handleChange={handlePerPageChange} />
+      <PSelector perPage={perPage} handleChange={handlePerPageChange} />
 
       <table>
-        <PTableHeader />
+        <PTableHeader columns={tableHeaders} />
         <tbody>
           {data.map((u) => (
             <PTableRow u={u} />

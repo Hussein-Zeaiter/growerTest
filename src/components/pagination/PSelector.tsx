@@ -3,7 +3,7 @@ interface SelectorProps {
   handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-function Selector({ perPage, handleChange }: SelectorProps) {
+function PSelector({ perPage, handleChange }: SelectorProps) {
   return (
     <label>
       Rows per page:
@@ -17,4 +17,4 @@ function Selector({ perPage, handleChange }: SelectorProps) {
   );
 }
 
-export default Selector;
+export default PSelector;

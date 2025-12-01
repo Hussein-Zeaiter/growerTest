@@ -17,7 +17,7 @@ function PButton({ page, totalPages, type, setPage }: PButtonProps) {
   // disabled logic based on type
   const disabled =
     type === "first" || type === "prev"
-      ? page === 0
+      ? page === 1
       : type === "next" || type === "last"
         ? page === totalPages
         : false;
@@ -26,7 +26,7 @@ function PButton({ page, totalPages, type, setPage }: PButtonProps) {
   const handleClick = () => {
     switch (type) {
       case "first":
-        setPage(0);
+        setPage(1);
         break;
       case "prev":
         setPage((p) => Math.max(0, p - 1));
@@ -39,6 +39,8 @@ function PButton({ page, totalPages, type, setPage }: PButtonProps) {
         break;
     }
   };
+
+  console.log({ page, totalPages });
 
   return (
     <button onClick={handleClick} disabled={disabled}>

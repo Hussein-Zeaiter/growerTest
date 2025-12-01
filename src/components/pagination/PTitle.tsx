@@ -7,7 +7,7 @@ export default function PTitle({
 }) {
   return (
     <h2>
-      Users (page {page + 1} / {totalPages + 1})
+      Users (page {page} / {totalPages})
     </h2>
   );
 }

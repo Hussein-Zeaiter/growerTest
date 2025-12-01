@@ -1,11 +1,10 @@
-export default function PTableHeader() {
+export default function PTableHeader({ columns }: { columns: string[] }) {
   return (
     <thead>
       <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Avatar</th>
+        {columns.map((cl) => (
+          <th>{cl}</th>
+        ))}
       </tr>
     </thead>
   );

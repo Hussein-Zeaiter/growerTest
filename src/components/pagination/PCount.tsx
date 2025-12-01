@@ -7,7 +7,7 @@ export default function PCount({
 }) {
   return (
     <span>
-      Page {page + 1} of {totalPages + 1}
+      Page {page} of {totalPages}
     </span>
   );
 }

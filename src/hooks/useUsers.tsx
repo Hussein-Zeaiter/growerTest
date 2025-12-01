@@ -9,7 +9,7 @@ export type User = {
 };
 
 function useUsers() {
-  const [page, setPage] = useState<number>(0);
+  const [page, setPage] = useState<number>(1);
   const [perPage, setPerPage] = useState<number>(3); // try 3, 6, 12
   const [data, setData] = useState<User[]>([]);
   const [totalPages, setTotalPages] = useState<number>(1);

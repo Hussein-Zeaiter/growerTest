@@ -1,4 +1,4 @@
-import type { User } from "./useUsers";
+import type { User } from "../../hooks/useUsers";
 
 export default function PTableRow({ u }: { u: User }) {
   return (
