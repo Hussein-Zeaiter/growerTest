@@ -1,0 +1,48 @@
+.list {
+  position: absolute;
+  top: 200%; /* pushes it below the button */
+  left: 50%; /* center horizontally */
+  transform: translateX(-50%); /* exact centering */
+
+  background: white;
+  width: 300px; /* example, you can adjust */
+
+  border-radius: 10px;
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 5px 10px 30px 10px;
+}
+
+h3 {
+  border-bottom: 3px solid var(--LightGrayishBlue);
+  padding: 1em;
+  width: 90%;
+}
+
+.content,
+.contentEmpty {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 10px;
+}
+
+.contentEmpty {
+  align-items: center;
+  min-height: 150px;
+}
+
+p {
+  color: var(--DarkGrayishBlue);
+}
+
+ul {
+  list-style: none;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}

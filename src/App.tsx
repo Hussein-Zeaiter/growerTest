@@ -1,14 +1,12 @@
-import './App.css'
-import Card from './components/Card'
+import "./App.css";
+import Product from "./pages/Product";
 
 function App() {
-
-
   return (
     <>
-      <Card title="Batata" />
+      <Product />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
