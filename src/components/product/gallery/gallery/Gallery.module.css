@@ -1,0 +1,130 @@
+.gallery {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px;
+  width: 25%;
+}
+
+.fullImg {
+  width: 100%;
+  border-radius: 10px;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+.thumbnails {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.thumbWrapper {
+  width: 20%;
+  border: 3px solid transparent;
+  box-sizing: border-box;
+  border-radius: 10px;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+}
+
+.thumbnails img {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  transition: all 0.4s;
+  object-fit: cover;
+  display: block;
+}
+
+.thumbnails img:hover {
+  opacity: 0.6;
+}
+
+.activeThumb {
+  border: 3px solid var(--primary);
+}
+
+.activeThumb img {
+  opacity: 0.6;
+}
+
+/* stuff below are for lightbox */
+
+.lightbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  width: 25%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 999;
+}
+
+.closeButtonCont {
+  width: 25%;
+  text-align: end;
+}
+
+.closeButtonCont img {
+  cursor: pointer;
+}
+
+.bigImgWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 50%;
+  position: relative;
+}
+
+.bigImgWrapper .fullImg {
+  width: fit-content;
+  height: 100%;
+  object-fit: contain;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.arrowButton {
+  position: absolute; /* <-- position over the image */
+  top: 50%; /* vertically centered */
+  transform: translateY(-50%);
+  width: 5%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--White);
+}
+
+.leftArrow {
+  left: 23%; /* move slightly outside the image */
+}
+
+.rightArrow {
+  right: 23%; /* move slightly outside the image */
+}
+
+.arrowButton img {
+  width: 30%;
+}
+
+.lightbox .thumbnails {
+  width: 20%;
+}
