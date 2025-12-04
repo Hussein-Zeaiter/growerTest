@@ -14,7 +14,7 @@ const dummyStockItems: stockItem[] = [
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl eget viverra ultrices, nunc nisi aliquet nisi, euismod aliquam nisl nisl.",
     originalPrice: 250.0,
-    discount: 50,
+    discount: 100,
     get discountedPrice() {
       return this.originalPrice * (1 - this.discount / 100);
     },

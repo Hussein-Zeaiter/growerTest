@@ -11,9 +11,6 @@ interface DescriptionProps {
   setItems: React.Dispatch<React.SetStateAction<Item[]>>;
 }
 
-//todo: handling adding to cart thro set items
-//todo: handling counter
-
 function Description({ stockItem, setItems }: DescriptionProps) {
   const [count, setCount] = useState<number>(0);
 
