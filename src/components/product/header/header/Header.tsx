@@ -1,16 +1,9 @@
 import Logo from "../../../../assets/product/logo.svg";
 import Avatar from "../../../../assets/product/image-avatar.png";
 import CartButton from "../cart/cartButton/CartButton";
-import type { Item } from "../../../../types/item";
 import styles from "./header.module.css";
 
-function Header({
-  items,
-  setItems,
-}: {
-  items: Item[];
-  setItems: React.Dispatch<React.SetStateAction<Item[]>>;
-}) {
+function Header() {
   return (
     <header>
       <div className={styles.subCont}>
@@ -26,7 +19,7 @@ function Header({
       </div>
 
       <div className={styles.subCont}>
-        <CartButton items={items} setItems={setItems} />
+        <CartButton />
 
         <img className={styles.avatar} src={Avatar} alt="Profile" />
       </div>
