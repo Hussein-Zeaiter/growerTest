@@ -17,6 +17,8 @@ function Details({ stockItem }: { stockItem: stockItem }) {
       <p className={style.price}>${stockItem.originalPrice.toFixed(2)}</p>
     </div>
   );
+  //todo
+  //what if there is not discount ????? also calculate the discount here raye7 the stock item thing!!!!
 }
 
 export default Details;

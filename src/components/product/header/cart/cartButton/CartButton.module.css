@@ -8,15 +8,14 @@
 
 .badge {
   position: absolute;
-  top: -5px; /* adjust */
-  right: -7px; /* adjust */
+  top: -5px;
+  right: -7px;
   background: var(--primary);
   color: white;
   font-size: 0.7rem;
   font-weight: 700;
-  padding: 1px 1px;
-  border-radius: 999px; /* makes full circle/pill */
-  line-height: 1;
+  padding: 1px 0;
+  border-radius: 50%;
   min-width: 18px;
   text-align: center;
 }
