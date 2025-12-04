@@ -1,8 +1,8 @@
 import Header from "../../components/product/header/header/Header";
 import ImageDisplayer from "../../components/product/gallery/ImageDisplayer";
 import Description from "../../components/product/description/Description";
-import type { Item, stockItem } from "../../types/item";
-import { useState } from "react";
+import { useCart } from "../../stores/itemsContext/useCart";
+import type { stockItem } from "../../types/item";
 import thumb from "../../assets/product/image-product-1-thumbnail.jpg";
 import fullImg from "../../assets/product/image-product-1.jpg";
 import thumb2 from "../../assets/product/image-product-2-thumbnail.jpg";
@@ -13,25 +13,6 @@ import thumb4 from "../../assets/product/image-product-4-thumbnail.jpg";
 import fullImg4 from "../../assets/product/image-product-4.jpg";
 
 import style from "./Product.module.css";
-
-const dummyItems: Item[] = [
-  {
-    id: 1,
-    stockId: 1,
-    img: thumb,
-    title: "Fall Limited Edition Sneakers",
-    qt: 2,
-    price: 125.0,
-  },
-  {
-    id: 2,
-    stockId: 1,
-    img: thumb,
-    title: "Orange Summer Sandals",
-    qt: 1,
-    price: 89.99,
-  },
-];
 
 const dummyStockItems: stockItem[] = [
   {
@@ -65,13 +46,12 @@ const dummyStockItems: stockItem[] = [
   },
 ];
 
-//todo
 function Product() {
-  const [items, setItems] = useState<Array<Item>>(dummyItems);
+  const { setItems } = useCart();
 
   return (
     <>
-      <Header items={items} setItems={setItems} />
+      <Header />
       <div className={style.main}>
         <ImageDisplayer stockItem={dummyStockItems[0]} />
         <Description stockItem={dummyStockItems[0]} setItems={setItems} />

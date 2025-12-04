@@ -1,5 +1,5 @@
 import "./App.css";
-import Product from "./pages/Product";
+import Product from "./pages/product/Product";
 import { CartProvider } from "./stores/itemsContext/CartProvider";
 import type { Item } from "./types/item";
 import thumb from "./assets/product/image-product-1-thumbnail.jpg";
