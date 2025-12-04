@@ -1,0 +1,27 @@
+.counterMain {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--LightGrayishBlue);
+  width: 40%;
+  border-radius: 5px;
+  padding: 0.8em 0.3em;
+}
+
+.counterMain button {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  cursor: pointer;
+}
+
+.counterMain p {
+  flex: 2;
+  margin: 0;
+  text-align: center;
+  font-weight: 700;
+  color: var(--Black);
+}
