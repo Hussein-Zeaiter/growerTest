@@ -15,7 +15,7 @@ function CartItem({
   };
 
   return (
-    <li key={item.id}>
+    <li>
       <img src={item.img} className={styles.itemImg} alt="" />
       <div className={styles.desc}>
         <p>{item.title}</p>

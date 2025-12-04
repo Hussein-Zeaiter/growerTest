@@ -3,7 +3,7 @@ import type { Item } from "../types/item";
 import { useState } from "react";
 import thumb from "../assets/product/image-product-1-thumbnail.jpg";
 
-const dummyItems: Item[] = [
+const dummyItems: Array<Item> = [
   {
     id: 1,
     img: thumb,

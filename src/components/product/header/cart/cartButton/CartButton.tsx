@@ -5,28 +5,28 @@ import CartList from "../cartList/CartList";
 import type { Item } from "../../../../../types/item";
 
 interface CartButtonProps {
-  items: Item[];
-  setItems: React.Dispatch<React.SetStateAction<Item[]>>;
+  items: Array<Item>;
+  setItems: React.Dispatch<React.SetStateAction<Array<Item>>>;
 }
 
-function CartButton(props: CartButtonProps) {
-  const [cartVisi, setCartVisi] = useState<boolean>(false);
+function CartButton({ items, setItems }: CartButtonProps) {
+  const [isDropdownVisible, setisDropdownVisible] = useState<boolean>(false);
 
   return (
     <div className={styles.wrapper}>
       <button
         className={styles.cartBtn}
         onClick={() => {
-          setCartVisi(!cartVisi);
+          setisDropdownVisible(!isDropdownVisible);
         }}
       >
         <img src={cartIcon} alt="cart" />
-        {props.items.length > 0 && (
-          <span className={styles.badge}>{props.items.length}</span>
+        {items.length > 0 && (
+          <span className={styles.badge}>{items.length}</span>
         )}
       </button>
 
-      {cartVisi && <CartList items={props.items} setItems={props.setItems} />}
+      {isDropdownVisible && <CartList items={items} setItems={setItems} />}
     </div>
   );
 }

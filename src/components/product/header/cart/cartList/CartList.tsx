@@ -4,16 +4,16 @@ import Button from "../../../button/Button";
 import CartItem from "../carItem/CartItem";
 
 interface CartListProps {
-  items: Item[];
-  setItems: React.Dispatch<React.SetStateAction<Item[]>>;
+  items: Array<Item>;
+  setItems: React.Dispatch<React.SetStateAction<Array<Item>>>;
 }
 
-function CartList(props: CartListProps) {
+function CartList({ items, setItems }: CartListProps) {
   return (
     <div className={styles.list}>
       <h3>Cart</h3>
 
-      {props.items.length === 0 ? (
+      {items.length === 0 ? (
         <div className={styles.contentEmpty}>
           <p>Your Cart Is Empty</p>
         </div>
@@ -21,13 +21,9 @@ function CartList(props: CartListProps) {
         <>
           <div className={styles.content}>
             <ul>
-              {props.items.map((item) => {
+              {items.map((item) => {
                 return (
-                  <CartItem
-                    item={item}
-                    setItems={props.setItems}
-                    key={item.id}
-                  />
+                  <CartItem item={item} setItems={setItems} key={item.id} />
                 );
               })}
             </ul>

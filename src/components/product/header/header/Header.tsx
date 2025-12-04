@@ -8,8 +8,8 @@ function Header({
   items,
   setItems,
 }: {
-  items: Item[];
-  setItems: React.Dispatch<React.SetStateAction<Item[]>>;
+  items: Array<Item>;
+  setItems: React.Dispatch<React.SetStateAction<Array<Item>>>;
 }) {
   return (
     <header>
