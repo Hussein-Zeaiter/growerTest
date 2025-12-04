@@ -13,8 +13,9 @@ function Counter({ count, setCount }: CounterProps) {
     <div className={style.counterMain}>
       <button
         onClick={() => {
-          if (count > 0) setCount(count - 1);
+          setCount(count - 1);
         }}
+        disabled={count === 0}
       >
         <img src={minus} alt="minus" />
       </button>

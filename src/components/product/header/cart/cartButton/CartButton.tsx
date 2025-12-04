@@ -32,7 +32,9 @@ function CartButton() {
       >
         <img src={cartIcon} alt="cart" />
         {items.length > 0 && (
-          <span className={styles.badge}>{items.length}</span> //todo: fix this, if more than 99 have it be 99+, and also make sure that looks cute
+          <span className={styles.badge}>
+            {items.length > 99 ? "99+" : items.length}
+          </span>
         )}
       </button>
 

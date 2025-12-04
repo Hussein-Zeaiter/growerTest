@@ -9,12 +9,23 @@ function Details({ stockItem }: { stockItem: stockItem }) {
       <h1 className={style.title}>{stockItem.title}</h1>
       <p className={style.description}>{stockItem.description}</p>
 
-      <p className={style.discount}>
-        ${stockItem.discountedPrice.toFixed(2)}
-        <span className={style.discountBox}>{stockItem.discount}%</span>
-      </p>
+      {stockItem.discount > 0 ? (
+        <>
+          <p className={style.discount}>
+            $
+            {(stockItem.originalPrice * (1 - stockItem.discount / 100)).toFixed(
+              2
+            )}
+            <span className={style.discountBox}>{stockItem.discount}%</span>
+          </p>
 
-      <p className={style.price}>${stockItem.originalPrice.toFixed(2)}</p>
+          <p className={style.priceDiscounted}>
+            ${stockItem.originalPrice.toFixed(2)}
+          </p>
+        </>
+      ) : (
+        <p className={style.price}>${stockItem.originalPrice.toFixed(2)}</p>
+      )}
     </div>
   );
   //todo

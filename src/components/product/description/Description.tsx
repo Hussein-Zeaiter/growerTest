@@ -2,22 +2,24 @@ import type { stockItem, Item } from "../../../types/item";
 import Details from "./details/Details";
 import Button from "../button/Button";
 import { useState } from "react";
-
 import style from "./Description.module.css";
 import Counter from "./counter/Counter";
+import { useCart } from "../../../stores/itemsContext/useCart";
 
 interface DescriptionProps {
   stockItem: stockItem;
-  setItems: React.Dispatch<React.SetStateAction<Item[]>>;
 }
 
-function Description({ stockItem, setItems }: DescriptionProps) {
+function Description({ stockItem }: DescriptionProps) {
   const [count, setCount] = useState<number>(0);
+  const { setItems } = useCart();
 
   const handleAdd = () => {
     if (count > 0) {
       setItems((prev) => {
         const newId = prev.length ? Math.max(...prev.map((i) => i.id)) + 1 : 1;
+        const priceAfterDiscount =
+          stockItem.originalPrice * (1 - stockItem.discount / 100);
 
         const newItem: Item = {
           id: newId, // unique cart entry id
@@ -25,9 +27,8 @@ function Description({ stockItem, setItems }: DescriptionProps) {
           img: stockItem.images[0].thumbnail,
           title: stockItem.title,
           qt: count,
-          price: stockItem.discountedPrice,
+          price: priceAfterDiscount,
         };
-
         return [...prev, newItem];
       });
 

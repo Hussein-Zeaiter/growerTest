@@ -18,6 +18,5 @@ export type stockItem = {
   description: string;
   originalPrice: number;
   discount: number;
-  discountedPrice: number;
   images: stockImage[];
 };
