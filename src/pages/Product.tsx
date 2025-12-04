@@ -1,12 +1,11 @@
 import Header from "../components/product/header/header/Header";
-<<<<<<< HEAD
 import type { stockItem } from "../types/item";
 import thumb from "../assets/product/image-product-1-thumbnail.jpg";
 import fullImg from "../assets/product/image-product-1.jpg";
 import thumb2 from "../assets/product/image-product-2-thumbnail.jpg";
 import fullImg2 from "../assets/product/image-product-2.jpg";
 import Description from "../components/product/description/Description";
-
+import { useCart } from "../stores/itemsContext/useCart";
 
 const dummyStockItems: stockItem[] = [
   {
@@ -34,18 +33,13 @@ const dummyStockItems: stockItem[] = [
 
 //todo
 function Product() {
-
+  const { setItems } = useCart();
   return (
     <>
       <Header />
       <Description stockItem={dummyStockItems[0]} setItems={setItems} />
     </>
   );
-=======
-
-function Product() {
-  return <Header />;
->>>>>>> 751d0c4c523bb30f7d772386ae7898e3a222fab1
 }
 
 export default Product;
