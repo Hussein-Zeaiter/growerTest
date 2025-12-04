@@ -1,14 +1,11 @@
 import styles from "./CartList.module.css";
-import type { Item } from "../../../../../types/item";
 import Button from "../../../button/Button";
 import CartItem from "../carItem/CartItem";
+import { useCart } from "../../../../../stores/itemsContext/useCart";
 
-interface CartListProps {
-  items: Array<Item>;
-  setItems: React.Dispatch<React.SetStateAction<Array<Item>>>;
-}
+function CartList() {
+  const { items } = useCart();
 
-function CartList({ items, setItems }: CartListProps) {
   return (
     <div className={styles.list}>
       <h3>Cart</h3>
@@ -22,9 +19,7 @@ function CartList({ items, setItems }: CartListProps) {
           <div className={styles.content}>
             <ul>
               {items.map((item) => {
-                return (
-                  <CartItem item={item} setItems={setItems} key={item.id} />
-                );
+                return <CartItem item={item} key={item.id} />;
               })}
             </ul>
           </div>

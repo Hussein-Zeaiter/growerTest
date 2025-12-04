@@ -1,24 +1,34 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import cartIcon from "../../../../../assets/product/icon-cart.svg";
 import styles from "./CartButton.module.css";
 import CartList from "../cartList/CartList";
-import type { Item } from "../../../../../types/item";
+import { useCart } from "../../../../../stores/itemsContext/useCart";
 
-interface CartButtonProps {
-  items: Array<Item>;
-  setItems: React.Dispatch<React.SetStateAction<Array<Item>>>;
-}
+function CartButton() {
+  const { items } = useCart();
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
-function CartButton({ items, setItems }: CartButtonProps) {
-  const [isDropdownVisible, setisDropdownVisible] = useState<boolean>(false);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(e.target as Node)
+      ) {
+        setIsDropdownVisible(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} ref={wrapperRef}>
       <button
         className={styles.cartBtn}
-        onClick={() => {
-          setisDropdownVisible(!isDropdownVisible);
-        }}
+        onClick={() => setIsDropdownVisible((v) => !v)}
       >
         <img src={cartIcon} alt="cart" />
         {items.length > 0 && (
@@ -26,7 +36,7 @@ function CartButton({ items, setItems }: CartButtonProps) {
         )}
       </button>
 
-      {isDropdownVisible && <CartList items={items} setItems={setItems} />}
+      {isDropdownVisible && <CartList />}
     </div>
   );
 }
