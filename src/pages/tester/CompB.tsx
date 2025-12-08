@@ -1,8 +1,7 @@
 import { useTest } from "../../stores/testContext/useTest";
 
 function CompB() {
-  const { nameData } = useTest();
-  const { name, setName } = nameData;
+  const { name, setName } = useTest();
 
   console.log("Component B rendered");
 
