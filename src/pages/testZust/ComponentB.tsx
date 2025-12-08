@@ -1,10 +1,12 @@
 import { useCountStore } from "../../stores/testZust/mainStore";
+import { useGetName } from "../../stores/testZust/useDiffStore";
 
 function ComponentB() {
-  const name = useCountStore((s) => s.name);
-  const count = useCountStore((s) => s.count);
+  /* const name = useCountStore((s) => s.name);
   const chng = useCountStore((s) => s.chng);
-  const inc = useCountStore((s) => s.inc);
+  const inc = useCountStore((s) => s.inc); */
+
+  const name = useGetName();
 
   console.log("comp b renderd");
 
@@ -12,9 +14,8 @@ function ComponentB() {
     <div>
       <h3>Component B</h3>
       <p>Name: {name}</p>
-      <p>Count: {count}</p>
-      <button onClick={chng}>change name</button>
-      <button onClick={inc}>increase count</button>
+      {/* <button onClick={chng}>change name</button>
+      <button onClick={inc}>increase count</button> */}
     </div>
   );
 }

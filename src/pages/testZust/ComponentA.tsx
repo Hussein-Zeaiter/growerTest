@@ -1,4 +1,5 @@
 import { useCountStore } from "../../stores/testZust/mainStore";
+import { useGetCount, useIncCount } from "../../stores/testZust/useDiffStore";
 
 function ComponentA() {
   /* const { count, inc } = useCountStore((s) => ({
@@ -6,8 +7,11 @@ function ComponentA() {
     inc: s.inc,
   })); */
 
-  const count = useCountStore((s) => s.count);
-  const inc = useCountStore((s) => s.inc);
+  const count = useGetCount();
+  const inc = useIncCount();
+
+  /* const count = useCountStore((s) => s.count);
+  const inc = useCountStore((s) => s.inc); */
 
   console.log("comp a renderd");
 
@@ -15,7 +19,7 @@ function ComponentA() {
     <div>
       <h3>Component A</h3>
       <p>Count: {count}</p>
-      <button onClick={inc}>increase count</button>
+      <button onClick={() => inc(5)}>increase count</button>
     </div>
   );
 }

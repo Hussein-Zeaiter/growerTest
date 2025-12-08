@@ -6,10 +6,10 @@ function TestZust() {
   return (
     <div>
       <ComponentA />
-      <ComponentB />
+      {/* <ComponentB />
 
       <Counter initialCount={10} />
-      <Counter initialCount={20} />
+      <Counter initialCount={20} /> */}
     </div>
   );
 }
