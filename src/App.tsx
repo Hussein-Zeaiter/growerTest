@@ -4,9 +4,13 @@ import TestProvider from "./stores/testContext/TestProvider";
 
 function App() {
   return (
-    <TestProvider>
-      <Tester />
-    </TestProvider>
+    <>
+      {/* <Header />
+    <Body /> */}
+      <TestProvider>
+        <Tester />
+      </TestProvider>
+    </>
   );
 }
 

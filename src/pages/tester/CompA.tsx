@@ -1,4 +1,5 @@
 import { useTest } from "../../stores/testContext/useTest";
+import { memo } from "react";
 
 function CompA() {
   const { count, setCount } = useTest();
@@ -10,14 +11,16 @@ function CompA() {
       <h3>Component A (uses count)</h3>
       <p>Count: {count}</p>
       <button onClick={() => setCount((c) => c + 1)}>Increment Count</button>
-      <CompD />
+      <MemoedChild />
     </div>
   );
 }
 
 function CompD() {
-  console.log("Component D rendered");
-  return <div>Component D</div>;
+  console.log("Child of A ");
+  return <div>Child of A</div>;
 }
+
+const MemoedChild = memo(CompD);
 
 export default CompA;

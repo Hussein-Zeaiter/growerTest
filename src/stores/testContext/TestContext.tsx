@@ -6,7 +6,7 @@ export type TestContextType = {
   setCount: React.Dispatch<React.SetStateAction<number>>;
   setName: React.Dispatch<React.SetStateAction<string>>;
 };
-
-console.log("TestContext rendered!!!!!!");
+/* 
+console.log("TestContext rendered!!!!!!"); */
 
 export const TestContext = createContext<TestContextType | null>(null);
