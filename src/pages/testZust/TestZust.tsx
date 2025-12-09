@@ -3,13 +3,14 @@ import ComponentB from "./ComponentB";
 import { Counter } from "./CounterZusty";
 
 function TestZust() {
+  console.log("main comp rendered");
   return (
     <div>
       <ComponentA />
-      {/* <ComponentB />
+      <ComponentB />
 
       <Counter initialCount={10} />
-      <Counter initialCount={20} /> */}
+      <Counter initialCount={20} />
     </div>
   );
 }

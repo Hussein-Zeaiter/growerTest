@@ -1,6 +1,7 @@
 import React from "react";
 import { createStore } from "zustand";
 import { CounterContext } from "./CounterContext";
+import type { CounterContextType } from "./CounterContext";
 
 export function CounterProvider({
   children,
@@ -10,9 +11,11 @@ export function CounterProvider({
   initialCount?: number;
 }) {
   const [store] = React.useState(() =>
-    createStore<{ count: number; inc: () => void }>((set) => ({
+    createStore<CounterContextType>((set) => ({
       count: initialCount,
-      inc: () => set((state) => ({ count: state.count + 1 })),
+      actions: {
+        inc: () => set((state) => ({ count: state.count + 1 })),
+      },
     }))
   );
 

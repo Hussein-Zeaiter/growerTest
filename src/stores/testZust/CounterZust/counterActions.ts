@@ -1,16 +1,18 @@
-import React from "react";
+import { useContext } from "react";
 import { useStore } from "zustand";
 import { CounterContext } from "./CounterContext";
+import type { CounterContextType } from "./CounterContext";
 
-export function useCount() {
-  const store = React.useContext(CounterContext);
-  if (!store)
-    throw new Error("useCount must be used inside <CounterProvider />");
-  return useStore(store, (s) => s.count);
-}
+//very confused about the generic T here, check with celine tmrw
+const useCountStore = <T>(selector: (state: CounterContextType) => T): T => {
+  const store = useContext(CounterContext);
 
-export function useInc() {
-  const store = React.useContext(CounterContext);
-  if (!store) throw new Error("useInc must be used inside <CounterProvider />");
-  return useStore(store, (s) => s.inc);
-}
+  if (!store) {
+    throw new Error("Missing provider, only call within a provider.");
+  }
+
+  return useStore(store, selector);
+};
+
+export const useCount = () => useCountStore((state) => state.count);
+export const useCountActions = () => useCountStore((state) => state.actions);

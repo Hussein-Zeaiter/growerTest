@@ -1,7 +1,7 @@
 import { CounterProvider } from "../../stores/testZust/CounterZust/CounterProvider";
 import {
   useCount,
-  useInc,
+  useCountActions,
 } from "../../stores/testZust/CounterZust/counterActions";
 
 type CounterProps = {
@@ -9,10 +9,12 @@ type CounterProps = {
 };
 
 export function Counter({ initialCount = 0 }: CounterProps) {
-  // 1️⃣ Inner component — uses hooks, contains the JSX
+  // inner component — uses hooks, contains the JSX
   function InnerCounter() {
     const count = useCount();
-    const inc = useInc();
+    const { inc } = useCountActions();
+
+    console.log("subscribed comp rendered");
 
     return (
       <div style={{ margin: 10, border: "1px solid gray", padding: 10 }}>
@@ -22,10 +24,17 @@ export function Counter({ initialCount = 0 }: CounterProps) {
     );
   }
 
-  // 2️⃣ Outer component — wraps InnerCounter with the provider
+  function InnerUnsubed() {
+    /* const count = useCount(); */ //follows the same rules of actual Context
+    console.log("unsubbed rendered");
+    return <div>InnerUnsubed</div>;
+  }
+
+  // outer component — wraps InnerCounter with the provider, done so we dont do it in every component that uses the counter
   return (
     <CounterProvider initialCount={initialCount}>
       <InnerCounter />
+      <InnerUnsubed />
     </CounterProvider>
   );
 }

@@ -1,4 +1,3 @@
-import { useCountStore } from "../../stores/testZust/mainStore";
 import { useGetName } from "../../stores/testZust/useDiffStore";
 
 function ComponentB() {
