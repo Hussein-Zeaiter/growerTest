@@ -10,9 +10,12 @@ export function CounterProvider({
   children: React.ReactNode;
   initialCount?: number;
 }) {
+  console.log("provider rendered");
+
   const [store] = React.useState(() =>
     createStore<CounterContextType>((set) => ({
       count: initialCount,
+      name: "Hussein",
       actions: {
         inc: () => set((state) => ({ count: state.count + 1 })),
       },

@@ -1,13 +1,13 @@
-import { useGetName } from "../../stores/testZust/useDiffStore";
+import { useName, useNameOrCount } from "../../stores/testZust/mainStore";
 
 function ComponentB() {
   /* const name = useCountStore((s) => s.name);
   const chng = useCountStore((s) => s.chng);
   const inc = useCountStore((s) => s.inc); */
 
-  const name = useGetName();
+  const { name } = useNameOrCount();
 
-  console.log("comp b renderd");
+  /* console.log("comp b renderd"); */
 
   return (
     <div>

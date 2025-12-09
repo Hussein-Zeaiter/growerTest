@@ -3,6 +3,7 @@ import type { StoreApi } from "zustand";
 
 export type CounterContextType = {
   count: number;
+  name: string;
   actions: {
     inc: () => void;
   };

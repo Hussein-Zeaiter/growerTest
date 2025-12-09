@@ -15,4 +15,5 @@ const useCountStore = <T>(selector: (state: CounterContextType) => T): T => {
 };
 
 export const useCount = () => useCountStore((state) => state.count);
+export const useName = () => useCountStore((state) => state.name);
 export const useCountActions = () => useCountStore((state) => state.actions);

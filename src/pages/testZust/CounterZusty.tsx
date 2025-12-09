@@ -2,6 +2,7 @@ import { CounterProvider } from "../../stores/testZust/CounterZust/CounterProvid
 import {
   useCount,
   useCountActions,
+  useName,
 } from "../../stores/testZust/CounterZust/counterActions";
 
 type CounterProps = {
@@ -25,9 +26,9 @@ export function Counter({ initialCount = 0 }: CounterProps) {
   }
 
   function InnerUnsubed() {
-    /* const count = useCount(); */ //follows the same rules of actual Context
+    const test = useName(); //follows the same rules of actual Context
     console.log("unsubbed rendered");
-    return <div>InnerUnsubed</div>;
+    return <div>InnerUnsubed{test}</div>;
   }
 
   // outer component — wraps InnerCounter with the provider, done so we dont do it in every component that uses the counter
