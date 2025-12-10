@@ -1,16 +1,13 @@
 import "./App.css";
-import Tester from "./pages/tester/Tester";
-import TestProvider from "./stores/testContext/TestProvider";
+/* import Tan from "./pages/tan/Tan"; */
+import { MainQueryClient } from "./queryProvider/MainQueryClient";
+import Burgers from "./pages/tan/Burgers";
 
 function App() {
   return (
-    <>
-      {/* <Header />
-    <Body /> */}
-      <TestProvider>
-        <Tester />
-      </TestProvider>
-    </>
+    <MainQueryClient>
+      <Burgers />
+    </MainQueryClient>
   );
 }
 
