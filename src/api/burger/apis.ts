@@ -65,7 +65,7 @@ export const burgerQueries = {
     queryOptions({
       queryKey: burgerKeys.uncooked(id),
       queryFn: async () => {
-        const url = handleUrl("/burger/uncood", id);
+        const url = handleUrl("/burger/uncooked", id);
         const res = await burgerApi.get<Burgers | Burgers[number]>(url);
         return res.data;
       },

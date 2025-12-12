@@ -5,6 +5,7 @@ import {
 import { burgerQueries } from "../../../../api/burger/apis";
 import { useQuery } from "@tanstack/react-query";
 import { useBurgerMutations } from "../../../../api/burger/mutations";
+import { useIsMutating } from "@tanstack/react-query";
 
 function BurgerList() {
   const burgerId = useBurgerId();
@@ -13,7 +14,7 @@ function BurgerList() {
   const addCookingPending =
     useBurgerMutations.useCheckBurgerPending("addCookedBurger");
   const addUncookingPending =
-    useBurgerMutations.useCheckBurgerPending("addUncookedBurger");
+    useIsMutating({ mutationKey: ["addUncookedBurger"] }) > 0;
 
   const {
     data: cookedData,
