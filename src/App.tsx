@@ -1,8 +1,8 @@
 import "./App.css";
-import FormCompetitor from "./pages/rhfExercise/FormCompetitor";
+import FormCompetitorPage from "./pages/rhfExercise/FormCompetitorPage";
 
 function App() {
-  return <FormCompetitor />;
+  return <FormCompetitorPage />;
 }
 
 export default App;

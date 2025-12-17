@@ -1,0 +1,28 @@
+.mainBox {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.subBox {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.titleHolder {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.titleHolder h3 {
+  margin: 0;
+}
+
+.disabledSubBox {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
