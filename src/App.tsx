@@ -1,8 +1,8 @@
 import "./App.css";
-import MainForm from "./pages/hookform/mainForm/MainForm";
+import FormCompetitor from "./pages/rhfExercise/FormCompetitor";
 
 function App() {
-  return <MainForm />;
+  return <FormCompetitor />;
 }
 
 export default App;
