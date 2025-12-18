@@ -2,19 +2,23 @@ import { useFormContext } from "react-hook-form";
 import type { FormInputs } from "../../pages/rhfExercise/FormCompetitorPage";
 import IndustrySelection from "./sections/industrySection/IndustrySection";
 import ContinueSection from "./sections/continueSection/ContinueSection";
+import RegionSection from "./sections/regionSection/RegionSection";
 import styles from "./FormCompetitor.module.css";
 
 function FormCompetitor() {
-  const { handleSubmit } = useFormContext<FormInputs>();
+  const { handleSubmit, getValues } = useFormContext<FormInputs>();
 
   const submitLogic = (data: FormInputs) => {
     console.log(data);
   };
 
+  console.log(getValues());
+
   return (
     <form className={styles.form} onSubmit={handleSubmit(submitLogic)}>
       <div className={styles.formInputSection}>
         <IndustrySelection />
+        <RegionSection />
       </div>
 
       <ContinueSection />

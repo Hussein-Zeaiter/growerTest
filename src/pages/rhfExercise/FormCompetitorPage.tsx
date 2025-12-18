@@ -5,12 +5,13 @@ import FormCompetitor from "../../components/rhfExercise/FormCompetitor";
 
 const schema = z
   .object({
-    industry: z.string("Industry is required"),
+    industry: z.string().nonempty("Industry is required"),
     otherIndustry: z
       .string()
       .max(10, "Enter At most 10 characters")
       .transform((val) => (val.trim() === "" ? null : val))
-      .nullable(),
+      .nullable(), //checkkk
+    region: z.array(z.string()).nonempty("Region is required"),
   })
   .refine(
     (data) => {
@@ -29,6 +30,12 @@ export type FormInputs = z.infer<typeof schema>;
 
 function FormCompetitorPage() {
   const methods = useForm<FormInputs>({
+    mode: "onChange",
+    defaultValues: {
+      industry: "",
+      otherIndustry: null,
+      region: [],
+    },
     resolver: zodResolver(schema),
   });
 

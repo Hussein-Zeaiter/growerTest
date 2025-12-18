@@ -1,7 +1,7 @@
 .mainBox {
   display: flex;
   align-items: flex-start;
-  justify-content: space-evenly;
+  justify-content: space-between;
   width: 100%;
 }
 
