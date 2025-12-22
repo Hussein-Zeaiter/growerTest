@@ -1,8 +1,8 @@
 import "./App.css";
-import MainForm from "./pages/hookform/mainForm/MainForm";
+import PicassoPage from "./pages/styledcomps/PicassoPage";
 
 function App() {
-  return <MainForm />;
+  return <PicassoPage />;
 }
 
 export default App;
