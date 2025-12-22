@@ -13,7 +13,7 @@ function FormCompetitor() {
     console.log(data);
   };
 
-  console.log(getValues());
+  /*  console.log(getValues()); */
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(submitLogic)}>

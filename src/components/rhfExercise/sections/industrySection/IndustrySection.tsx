@@ -26,7 +26,7 @@ export default function IndustrySection() {
   /*   console.log(industry);
   console.log(isOther); */
 
-  console.log(errors);
+  /* console.log(errors); */
 
   useEffect(() => {
     if (industry !== "other") {
