@@ -7,7 +7,7 @@ import CompetitorSection from "./sections/competitorsSection/CompetitorSection";
 import styles from "./FormCompetitor.module.css";
 
 function FormCompetitor() {
-  const { handleSubmit, getValues } = useFormContext<FormInputs>();
+  const { handleSubmit } = useFormContext<FormInputs>();
 
   const submitLogic = (data: FormInputs) => {
     console.log(data);

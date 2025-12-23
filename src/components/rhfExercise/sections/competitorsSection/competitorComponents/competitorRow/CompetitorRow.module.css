@@ -1,0 +1,24 @@
+.competitorRow {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  border: 2px solid red;
+  padding: 10px;
+  width: 100%;
+  background-color: lightgoldenrodyellow;
+}
+
+.competitorRowName,
+.competitorRowButtons {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+
+.competitorRowName p {
+  margin: 0;
+  text-transform: capitalize;
+}

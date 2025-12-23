@@ -1,20 +1,11 @@
-import { useState } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import SectionTitle from "../../atoms/SectionTitle";
-import { competitorSchema } from "./../../../../pages/rhfExercise/FormCompetitorPage";
-import * as z from "zod";
-
-type Competitor = z.infer<typeof competitorSchema>;
-
-interface EditingCompetitor {
-  fieldId: string;
-  index: number;
-  isNewlyAdded: boolean;
-  originalValue: Competitor | null;
-}
+import { useEditingContext } from "../../../../stores/rhfExercise/EditingProvider";
+import CompetitorRow from "./competitorComponents/competitorRow/CompetitorRow";
+import styles from "./CompetitorSection.module.css";
 
 function CompetitorSection() {
-  const [isEditing, setIsEditing] = useState<EditingCompetitor | null>(null);
+  const { isEditing, setIsEditing } = useEditingContext();
   /* const [canSaveEdit, setCanSaveEdit] = useState(false); */
 
   const {
@@ -134,18 +125,25 @@ function CompetitorSection() {
 
   //REMOVE
   const handleRemoveCompetitor = (index: number) => {
-    handleReset(index);
-    remove(index);
+    if (index === 0 && fields.length === 1) {
+      alert("Must have at least one competitor");
+      return;
+    } else {
+      handleReset(index);
+      remove(index);
+    }
   };
 
+  console.log("error competitor", errors.competitors?.message);
+
   return (
-    <>
+    <div className={styles.competitorsSection}>
       <SectionTitle
         title="Add Your Competitors"
         info="Whatever competitors you have"
       />
 
-      <div>
+      <div className={styles.competitorsContainer}>
         {fields.length > 0 ? (
           fields.map((field, index) => {
             const competitor = getValues("competitors")[index];
@@ -162,34 +160,11 @@ function CompetitorSection() {
             return (
               <div key={field.id}>
                 {!isRowEditing ? (
-                  <>
-                    <p>{competitor.name}</p>
-                    <a
-                      href={competitor.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {competitor.url}
-                    </a>
-
-                    {!isEditing && (
-                      <>
-                        <button
-                          type="button"
-                          onClick={() => handleEditComepetitor(index)}
-                        >
-                          Edit
-                        </button>
-
-                        <button
-                          type="button"
-                          onClick={() => handleRemoveCompetitor(index)}
-                        >
-                          Remove
-                        </button>
-                      </>
-                    )}
-                  </>
+                  <CompetitorRow
+                    competitor={competitor}
+                    onEdit={() => handleEditComepetitor(index)}
+                    onRemove={() => handleRemoveCompetitor(index)}
+                  />
                 ) : (
                   <>
                     <div>
@@ -266,15 +241,16 @@ function CompetitorSection() {
         ) : (
           <div>
             <p>No competitors added</p>
+            <p>{errors.competitors?.message as string}</p>
           </div>
         )}
-        {!isEditing && (
-          <button type="button" onClick={handleAddCompetitor}>
-            Add Competitor
-          </button>
-        )}
       </div>
-    </>
+      {!isEditing && (
+        <button type="button" onClick={handleAddCompetitor}>
+          Add Competitor
+        </button>
+      )}
+    </div>
   );
 }
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { z } from "zod";
-import { competitorSchema } from "../../../../../pages/rhfExercise/FormCompetitorPage";
+import { competitorSchema } from "../../../../../../pages/rhfExercise/FormCompetitorPage";
 
 type Competitor = z.infer<typeof competitorSchema>;
 

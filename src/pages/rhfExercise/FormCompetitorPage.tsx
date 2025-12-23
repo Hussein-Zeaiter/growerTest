@@ -3,6 +3,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import FormCompetitor from "../../components/rhfExercise/FormCompetitor";
+import { EditingProvider } from "../../stores/rhfExercise/EditingProvider";
 
 export const competitorSchema = z.object({
   name: z.string().min(3, "Please enter a valid name").max(20, "Too Long"),
@@ -68,9 +69,11 @@ function FormCompetitorPage() {
   });
 
   return (
-    <FormProvider {...methods}>
-      <FormCompetitor />
-    </FormProvider>
+    <EditingProvider>
+      <FormProvider {...methods}>
+        <FormCompetitor />
+      </FormProvider>
+    </EditingProvider>
   );
 }
 
