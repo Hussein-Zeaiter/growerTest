@@ -1,7 +1,7 @@
 import styles from "./CompetitorRow.module.css";
-import { competitorSchema } from "../../../../../../pages/rhfExercise/FormCompetitorPage";
+import { competitorSchema } from "../../../../pages/rhfExercise/FormCompetitorPage";
 import * as z from "zod";
-import { useEditingContext } from "../../../../../../stores/rhfExercise/EditingProvider";
+import { useEditingContext } from "../../../../stores/rhfExercise/EditingProvider";
 import { Button } from "antd";
 import { DeleteFilled, EditOutlined, LinkOutlined } from "@ant-design/icons";
 
@@ -15,6 +15,7 @@ interface Props {
 
 function CompetitorRow({ competitor, onEdit, onRemove }: Props) {
   const { isEditing } = useEditingContext();
+  const isEditingTrue = isEditing !== null;
 
   return (
     <div className={styles.competitorRow}>
@@ -28,16 +29,16 @@ function CompetitorRow({ competitor, onEdit, onRemove }: Props) {
         </div>
       </div>
 
-      {isEditing === null && (
         <div className={styles.competitorRowButtons}>
-          <Button htmlType="button" onClick={onEdit} icon={<EditOutlined />} />
+          <Button htmlType="button" onClick={onEdit} icon={<EditOutlined />} disabled={isEditingTrue}/>
           <Button
             htmlType="button"
             onClick={onRemove}
             icon={<DeleteFilled />}
+            disabled={isEditingTrue}
           />
         </div>
-      )}
+      
     </div>
   );
 }

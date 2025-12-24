@@ -1,7 +1,6 @@
 import { Select, Input } from "antd";
 import { useFormContext, useWatch, Controller } from "react-hook-form";
 import styles from "./IndustrySection.module.css";
-import { useEffect } from "react";
 import ErrorMessage from "../../atoms/ErrorMessage";
 import SectionTitle from "../../atoms/SectionTitle";
 
@@ -13,28 +12,11 @@ const options = [
 ];
 
 export default function IndustrySection() {
-  const {
-    control,
-    setValue,
-    trigger,
-    clearErrors,
-    formState: { errors }, //use fieldState try to avoid the formState
-  } = useFormContext();
+  const { control, setValue, trigger, clearErrors, unregister } =
+    useFormContext();
 
   const industry = useWatch({ control, name: "industry" });
   const isOther = industry === "other";
-  /*   console.log(industry);
-  console.log(isOther); */
-
-  /* console.log(errors); */
-
-  useEffect(() => {
-    if (industry !== "other") {
-      setValue("otherIndustry", null);
-      clearErrors("otherIndustry");
-      trigger("otherIndustry");
-    } //put in the onchange //research forward ref //incase industry was not other, can we remove the otherIndustry field, check this after the competitor thing //switch otherIndustry to native input no controller!
-  }, [industry, setValue, clearErrors, trigger]);
 
   return (
     <div className={styles.mainBox}>
@@ -48,19 +30,28 @@ export default function IndustrySection() {
         <Controller
           name="industry"
           control={control}
-          render={({ field }) => (
-            <Select
-              {...field}
-              options={options}
-              placeholder="Industry"
-              className={styles.select}
-            />
+          render={({ field, fieldState: { error } }) => (
+            <>
+              <Select
+                {...field}
+                options={options}
+                placeholder="Industry"
+                className={styles.select}
+                onChange={(value) => {
+                  field.onChange(value);
+
+                  if (value !== "other") {
+                    setValue("otherIndustry", null);
+                    clearErrors("otherIndustry");
+                    trigger("otherIndustry");
+                  }
+                }}
+              />
+
+              {error && <ErrorMessage message={error.message as string} />}
+            </>
           )}
         />
-
-        {errors.industry && (
-          <ErrorMessage message={errors.industry.message?.toString()} />
-        )}
       </div>
 
       <div
@@ -70,18 +61,18 @@ export default function IndustrySection() {
         <Controller
           name="otherIndustry"
           control={control}
-          render={({ field }) => (
-            <Input
-              {...field}
-              placeholder="Other industry"
-              className={styles.input}
-              disabled={!isOther}
-            />
+          render={({ field, fieldState: { error } }) => (
+            <>
+              <Input
+                {...field}
+                placeholder="Other industry"
+                className={styles.input}
+                disabled={!isOther}
+              />
+              {error && <ErrorMessage message={error.message as string} />}
+            </>
           )}
         />
-        {errors.otherIndustry && (
-          <ErrorMessage message={errors.otherIndustry.message as string} />
-        )}
       </div>
     </div>
   );

@@ -1,43 +1,18 @@
 import { useFieldArray, useFormContext } from "react-hook-form";
 import SectionTitle from "../../atoms/SectionTitle";
 import { useEditingContext } from "../../../../stores/rhfExercise/EditingProvider";
-import CompetitorRow from "./competitorComponents/competitorRow/CompetitorRow";
+import CompetitorRow from "../../molecules/competitorRow/CompetitorRow";
 import styles from "./CompetitorSection.module.css";
+import { Button } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+import CompetitorEditor from "../../molecules/competitorEditor/CompetitorEditor";
 
 function CompetitorSection() {
   const { isEditing, setIsEditing } = useEditingContext();
-  /* const [canSaveEdit, setCanSaveEdit] = useState(false); */
 
-  const {
-    register,
-    getValues,
-    setValue,
-    getFieldState,
-    resetField,
-    formState: { errors },
-  } = useFormContext();
+  const { getValues, setValue, getFieldState, resetField, clearErrors } =
+    useFormContext();
 
-  console.log(errors);
-
-  /*  const handleInputChange = async (
-    index: number,
-    fieldName: keyof Competitor,
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    // Call RHF's default onChange
-    register(`competitors.${index}.${fieldName}`).onChange(e);
-
-    // Trigger validation for this field
-    const isValidCurrent = await trigger(`competitors.${index}.${fieldName}`);
-
-    // Trigger validation for the other field in the row
-    const otherField = fieldName === "name" ? "url" : "name";
-    const isValidOther = await trigger(`competitors.${index}.${otherField}`);
-
-    // Set editing state based on both fields
-    setCanSaveEdit(isValidCurrent && isValidOther);
-  };
- */
   const { fields, append, remove } = useFieldArray({
     name: "competitors",
   });
@@ -63,7 +38,7 @@ function CompetitorSection() {
     }
   };
 
-  //Reset the bad boys
+  //Reset Editor Fields
   const handleReset = (index: number) => {
     resetField(`competitors.${index}.name`);
     resetField(`competitors.${index}.url`);
@@ -92,13 +67,15 @@ function CompetitorSection() {
   const handleCancelEditing = (index: number) => {
     const oldValues = isEditing?.originalValue;
 
-    console.log(oldValues);
-
     if (isEditing?.isNewlyAdded) {
       handleReset(index);
       remove(index);
+
+      if (fields.length === 0) {
+        clearErrors("competitors");
+      }
     } else {
-      setValue(`competitors.${index}`, isEditing?.originalValue, {
+      setValue(`competitors.${index}`, oldValues, {
         shouldDirty: false,
         shouldTouch: false,
         shouldValidate: true,
@@ -134,8 +111,6 @@ function CompetitorSection() {
     }
   };
 
-  console.log("error competitor", errors.competitors?.message);
-
   return (
     <div className={styles.competitorsSection}>
       <SectionTitle
@@ -148,14 +123,6 @@ function CompetitorSection() {
           fields.map((field, index) => {
             const competitor = getValues("competitors")[index];
             const isRowEditing = isEditing?.index === index;
-            /*  const fieldNamePath = `competitors.${index}.name`;
-            const fieldUrlPath = `competitors.${index}.url`;
-
-            const nameState = getFieldState(fieldNamePath);
-            const urlState = getFieldState(fieldUrlPath);
-
-            console.log("name state", nameState);
-            console.log("url state", urlState); */
 
             return (
               <div key={field.id}>
@@ -166,89 +133,43 @@ function CompetitorSection() {
                     onRemove={() => handleRemoveCompetitor(index)}
                   />
                 ) : (
-                  <>
-                    <div>
-                      <input
-                        {...register(`competitors.${index}.name`)}
-                        placeholder="Name"
-                      />
-                      {errors.competitors?.root?.message && (
-                        <p className="error">
-                          {errors.competitors?.root?.message as string}
-                        </p>
-                      )}
-
-                      {Array.isArray(errors.competitors) &&
-                        errors.competitors[index] && (
-                          <>
-                            {errors.competitors[index]?.name?.message && (
-                              <p>{errors.competitors[index].name.message}</p>
-                            )}
-                          </>
-                        )}
-                    </div>
-
-                    <div>
-                      <input
-                        {...register(`competitors.${index}.url`)}
-                        placeholder="URL"
-                      />
-
-                      {Array.isArray(errors.competitors) &&
-                        errors.competitors[index] && (
-                          <>
-                            {errors.competitors[index]?.url?.message && (
-                              <p>{errors.competitors[index].url.message}</p>
-                            )}
-                          </>
-                        )}
-                    </div>
-
-                    <input
-                      {...register(`competitors.${index}.differentiator`)}
-                      placeholder="Differentiator"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => handleSaveCompetitor()}
-                      disabled={
-                        isEditing?.isNewlyAdded
-                          ? handleDisabled(
-                              "new",
-                              `competitors.${index}.name`,
-                              `competitors.${index}.url`
-                            )
-                          : handleDisabled(
-                              "old",
-                              `competitors.${index}.name`,
-                              `competitors.${index}.url`
-                            )
-                      }
-                    >
-                      Save
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleCancelEditing(index)}
-                    >
-                      Cancel
-                    </button>
-                  </>
+                  <CompetitorEditor
+                    index={index}
+                    handleSaveCompetitor={() => handleSaveCompetitor()}
+                    handleCancelEditing={() => handleCancelEditing(index)}
+                    isSaveDisabled={
+                      isEditing?.isNewlyAdded
+                        ? handleDisabled(
+                            "new",
+                            `competitors.${index}.name`,
+                            `competitors.${index}.url`
+                          )
+                        : handleDisabled(
+                            "old",
+                            `competitors.${index}.name`,
+                            `competitors.${index}.url`
+                          )
+                    }
+                  />
                 )}
               </div>
             );
           })
         ) : (
           <div>
-            <p>No competitors added</p>
-            <p>{errors.competitors?.message as string}</p>
+            <p className={styles.noCompetitors}>No competitors added</p>
           </div>
         )}
       </div>
       {!isEditing && (
-        <button type="button" onClick={handleAddCompetitor}>
+        <Button
+          htmlType="button"
+          onClick={handleAddCompetitor}
+          icon={<PlusOutlined />}
+          disabled={fields.length >= 3}
+        >
           Add Competitor
-        </button>
+        </Button>
       )}
     </div>
   );

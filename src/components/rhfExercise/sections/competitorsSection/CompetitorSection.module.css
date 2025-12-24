@@ -1,5 +1,4 @@
 .competitorsSection {
-  border: 2px solid green;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -8,6 +7,14 @@
 }
 
 .competitorsContainer {
-  border: 2px solid purple;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.noCompetitors {
+  margin: 0;
+  text-transform: capitalize;
+  text-decoration: underline;
 }
