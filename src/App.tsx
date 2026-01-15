@@ -2,7 +2,7 @@ import "./App.css";
 import FormCompetitorPage from "./pages/rhfExercise/FormCompetitorPage";
 
 function App() {
-  return <FormCompetitorPage />;
+	return <FormCompetitorPage />;
 }
 
 export default App;

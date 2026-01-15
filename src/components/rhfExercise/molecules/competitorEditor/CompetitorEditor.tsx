@@ -1,96 +1,123 @@
-import { useFormContext } from "react-hook-form";
+import { Button } from "antd";
+import { useState } from "react";
+import { useController } from "react-hook-form";
+import { useEditingContext } from "../../../../stores/rhfExercise/EditingProvider";
+import BlueDot from "../../atoms/BlueDot";
 import ErrorMessage from "../../atoms/ErrorMessage";
 import styles from "./CompetitorEditor.module.css";
-import BlueDot from "../../atoms/BlueDot";
-import { Button } from "antd";
 
 interface EditorProps {
-  index: number;
-  handleSaveCompetitor: () => void;
-  handleCancelEditing: () => void;
-  isSaveDisabled: boolean;
+	index: number;
+	handleSaveCompetitor: () => void;
+	handleCancelEditing: () => void;
 }
 
 function CompetitorEditor({
-  index,
-  handleSaveCompetitor,
-  handleCancelEditing,
-  isSaveDisabled,
+	index,
+	handleSaveCompetitor,
+	handleCancelEditing,
 }: EditorProps) {
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext();
+	const { isEditing } = useEditingContext();
+	const original = isEditing?.originalValue;
+	const [interactedWithName, setInteractedWithName] = useState(false);
+	const [interactedWithUrl, setInteractedWithUrl] = useState(false);
 
-  return (
-    <div className={styles.editor}>
-      <div className={styles.requiredGrouped}>
-        <div className={styles.fieldGroup}>
-          <div className={styles.fieldTitle}>
-            <p>Competitor Name</p>
-            <BlueDot />
-          </div>
+	//NAME FIELD
+	const {
+		field: nameField,
+		fieldState: { invalid: nameInvalid, error: nameError },
+	} = useController({
+		name: `competitors.${index}.name`,
+	});
 
-          <input
-            {...register(`competitors.${index}.name`)}
-            placeholder="Enter Competitor Name"
-          />
+	//URL FIELD
+	const {
+		field: urlField,
+		fieldState: { invalid: urlInvalid, error: urlError },
+	} = useController({
+		name: `competitors.${index}.url`,
+	});
 
-          {Array.isArray(errors.competitors) && errors.competitors[index] && (
-            <>
-              {errors.competitors[index]?.name?.message && (
-                <ErrorMessage
-                  message={errors.competitors[index].name.message}
-                />
-              )}
-            </>
-          )}
-        </div>
+	const { field: diffField } = useController({
+		name: `competitors.${index}.differentiator`,
+	});
 
-        <div className={styles.fieldGroup}>
-          <div className={styles.fieldTitle}>
-            <p>Competitor Website URL</p>
-            <BlueDot />
-          </div>
+	const hasChanged =
+		original?.name !== nameField.value ||
+		original?.url !== urlField.value ||
+		original?.differentiator !== diffField.value;
 
-          <input
-            {...register(`competitors.${index}.url`)}
-            placeholder="Enter Website URL"
-          />
+	return (
+		<div className={styles.editor}>
+			<div className={styles.requiredGrouped}>
+				<div className={styles.fieldGroup}>
+					<div className={styles.fieldTitle}>
+						<p>Competitor Name</p>
+						<BlueDot />
+					</div>
 
-          {Array.isArray(errors.competitors) && errors.competitors[index] && (
-            <>
-              {errors.competitors[index]?.url?.message && (
-                <ErrorMessage message={errors.competitors[index].url.message} />
-              )}
-            </>
-          )}
-        </div>
-      </div>
+					<input
+						{...nameField}
+						placeholder="Enter Competitor Name"
+						onChange={(e) => {
+							setInteractedWithName(true);
+							nameField.onChange(e);
+						}}
+					/>
+					{interactedWithName && nameError && (
+						<ErrorMessage message={nameError.message} />
+					)}
+				</div>
 
-      <div className={styles.fieldGroup}>
-        <p>Differentiator</p>
-        <textarea
-          {...register(`competitors.${index}.differentiator`)}
-          placeholder="What differentiates you from your competitors (e.g., pricing, product features, customer experience)"
-          className={styles.textarea}
-        />
-      </div>
+				<div className={styles.fieldGroup}>
+					<div className={styles.fieldTitle}>
+						<p>Competitor Website URL</p>
+						<BlueDot />
+					</div>
 
-      <div className={styles.buttonGroup}>
-        <Button
-          htmlType="button"
-          onClick={handleSaveCompetitor}
-          disabled={isSaveDisabled}
-        >
-          Save Changes
-        </Button>
-        <Button htmlType="button" onClick={handleCancelEditing}>
-          Cancel
-        </Button>
-      </div>
-    </div>
-  );
+					<input
+						{...urlField}
+						placeholder="Enter Website URL"
+						onChange={(e) => {
+							setInteractedWithUrl(true);
+							urlField.onChange(e);
+						}}
+					/>
+					{interactedWithUrl && urlError && (
+						<ErrorMessage message={urlError.message} />
+					)}
+				</div>
+			</div>
+
+			<div className={styles.fieldGroup}>
+				<p>Differentiator</p>
+				<textarea
+					{...diffField}
+					placeholder="What differentiates you from your competitors (e.g., pricing, product features, customer experience)"
+					className={styles.textarea}
+				/>
+			</div>
+
+			<div className={styles.buttonGroup}>
+				<Button
+					htmlType="button"
+					onClick={handleSaveCompetitor}
+					disabled={
+						!hasChanged ||
+						!nameField.value ||
+						!urlField.value ||
+						nameInvalid ||
+						urlInvalid
+					}
+				>
+					Save Changes
+				</Button>
+				<Button htmlType="button" onClick={handleCancelEditing}>
+					Cancel
+				</Button>
+			</div>
+		</div>
+	);
 }
 
 export default CompetitorEditor;
