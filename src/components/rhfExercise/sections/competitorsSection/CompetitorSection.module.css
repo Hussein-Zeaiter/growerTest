@@ -1,0 +1,20 @@
+.competitorsSection {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.competitorsContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.noCompetitors {
+  margin: 0;
+  text-transform: capitalize;
+  text-decoration: underline;
+}
