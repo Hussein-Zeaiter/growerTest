@@ -1,7 +1,6 @@
 import { Select } from "antd";
-import { Controller, useFormContext } from "react-hook-form";
-import type { FormInputs } from "../../../../pages/rhfExercise/FormCompetitorPage";
-import ErrorMessage from "../../atoms/ErrorMessage";
+import { Controller } from "react-hook-form";
+import { ErrorMessage } from "../../atoms/ErrorMessage";
 import SectionTitle from "../../atoms/SectionTitle";
 import styles from "./RegionSection.module.css";
 
@@ -12,9 +11,6 @@ const options = [
 ];
 
 export default function RegionSection() {
-	const {
-		formState: { errors },
-	} = useFormContext<FormInputs>();
 	return (
 		<div className={styles.mainBox}>
 			<SectionTitle
@@ -25,21 +21,21 @@ export default function RegionSection() {
 
 			<Controller
 				name="region"
-				render={({ field }) => (
-					<Select
-						{...field}
-						mode="multiple"
-						options={options}
-						placeholder="Region"
-						className={styles.regionSelect}
-						allowClear
-					/>
+				render={({ field, fieldState: { error } }) => (
+					<>
+						<Select
+							{...field}
+							mode="multiple"
+							options={options}
+							placeholder="Region"
+							className={styles.regionSelect}
+							allowClear
+						/>
+
+						{error && <ErrorMessage message={error.message as string} />}
+					</>
 				)}
 			/>
-
-			{errors.region && (
-				<ErrorMessage message={errors.region.message as string} />
-			)}
 		</div>
 	);
 }

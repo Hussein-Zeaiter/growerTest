@@ -1,6 +1,6 @@
 import { Input, Select } from "antd";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
-import ErrorMessage from "../../atoms/ErrorMessage";
+import { ErrorMessage } from "../../atoms/ErrorMessage";
 import SectionTitle from "../../atoms/SectionTitle";
 import styles from "./IndustrySection.module.css";
 

@@ -36,7 +36,7 @@ const schema = z
 		// industry → otherIndustry rule
 		if (data.industry === "other" && !data.otherIndustry) {
 			ctx.addIssue({
-				code: z.ZodIssueCode.custom,
+				code: "custom",
 				message: "Please enter the industry",
 				path: ["otherIndustry"],
 			});
@@ -50,7 +50,7 @@ const schema = z
 
 			if (nameMap.has(name)) {
 				ctx.addIssue({
-					code: z.ZodIssueCode.custom, //this needs fixing check zod docs
+					code: "custom",
 					message: "Competitor name must be unique",
 					path: ["competitors", index, "name"],
 				});

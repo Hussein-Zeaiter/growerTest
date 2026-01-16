@@ -1,5 +1,6 @@
 import { PlusOutlined } from "@ant-design/icons";
 import { Button } from "antd";
+import { useEffect, useRef } from "react";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 import { useEditingContext } from "../../../../stores/rhfExercise/EditingProvider";
 import SectionTitle from "../../atoms/SectionTitle";
@@ -10,7 +11,12 @@ import styles from "./CompetitorSection.module.css";
 function CompetitorSection() {
 	const { isEditing, setIsEditing } = useEditingContext();
 
-	const { getValues, setValue } = useFormContext();
+	const {
+		getValues,
+		setValue,
+		clearErrors,
+		formState: { isValidating },
+	} = useFormContext();
 
 	const { fields, append, remove } = useFieldArray({
 		name: "competitors",
@@ -18,8 +24,17 @@ function CompetitorSection() {
 
 	const competitors = useWatch({ name: "competitors" });
 
+	//this is done here to combat the issue of error persisting on 1st competitor
+	const pendingClearRef = useRef(false);
+	useEffect(() => {
+		if (pendingClearRef.current && !isValidating) {
+			clearErrors("competitors");
+			pendingClearRef.current = false;
+		}
+	}, [isValidating, clearErrors]);
+
 	//ADDING
-	const handleAddCompetitor = () => {
+	const handleAddCompetitor = async () => {
 		const newCompetitor = {
 			name: "",
 			url: "",
@@ -42,6 +57,9 @@ function CompetitorSection() {
 
 		if (isEditing?.isNewlyAdded) {
 			remove(index);
+			if (index === 0) {
+				pendingClearRef.current = true;
+			}
 		} else {
 			setValue(`competitors.${index}`, oldValues, {
 				shouldDirty: false,
@@ -87,7 +105,6 @@ function CompetitorSection() {
 			<div className={styles.competitorsContainer}>
 				{fields.length > 0 ? (
 					fields.map((field, index) => {
-						console.log({ field });
 						const competitor = competitors?.[index];
 						const isRowEditing = isEditing?.index === index;
 
