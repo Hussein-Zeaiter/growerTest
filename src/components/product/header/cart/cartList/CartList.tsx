@@ -1,19 +1,16 @@
 import styles from "./CartList.module.css";
-import type { Item } from "../../../../../types/item";
 import Button from "../../../button/Button";
 import CartItem from "../carItem/CartItem";
+import { useCart } from "../../../../../stores/itemsContext/useCart";
 
-interface CartListProps {
-  items: Item[];
-  setItems: React.Dispatch<React.SetStateAction<Item[]>>;
-}
+function CartList() {
+  const { items } = useCart();
 
-function CartList(props: CartListProps) {
   return (
     <div className={styles.list}>
       <h3>Cart</h3>
 
-      {props.items.length === 0 ? (
+      {items.length === 0 ? (
         <div className={styles.contentEmpty}>
           <p>Your Cart Is Empty</p>
         </div>
@@ -21,14 +18,8 @@ function CartList(props: CartListProps) {
         <>
           <div className={styles.content}>
             <ul>
-              {props.items.map((item) => {
-                return (
-                  <CartItem
-                    item={item}
-                    setItems={props.setItems}
-                    key={item.id}
-                  />
-                );
+              {items.map((item) => {
+                return <CartItem item={item} key={item.id} />;
               })}
             </ul>
           </div>

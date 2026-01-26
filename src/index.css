@@ -3,6 +3,7 @@
 :root {
   --primary: hsl(26, 100%, 55%);
   --primary-light: hsl(25, 100%, 94%);
+  --primary-hover: hsl(26, 100%, 67%);
 
   /* neutrals */
   --VeryDarkBlue: hsl(220, 13%, 13%);

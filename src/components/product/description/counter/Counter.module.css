@@ -5,7 +5,8 @@
   background-color: var(--LightGrayishBlue);
   width: 40%;
   border-radius: 5px;
-  padding: 0.8em 0.3em;
+  padding: 0;
+  height: 55px;
 }
 
 .counterMain button {
@@ -16,6 +17,12 @@
   align-items: center;
   flex: 1;
   cursor: pointer;
+  height: 100%;
+}
+
+.counterMain button[disabled] {
+  opacity: 0.5;
+  cursor: default;
 }
 
 .counterMain p {

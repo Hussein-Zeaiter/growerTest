@@ -1,6 +1,6 @@
 .pButton {
   padding: 15px;
-  width: 90%;
+  width: 100%;
   cursor: pointer;
   border-radius: 10px;
   color: var(--Black);
@@ -12,6 +12,12 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
+  transition: all 0.3s;
+  color: var(--Black);
+}
+
+.pButton:hover {
+  background-color: var(--primary-hover);
 }
 
 .pButton img {

@@ -22,7 +22,8 @@ header nav a {
   height: 100%;
   padding: 0 1.2rem;
   color: var(--DarkGrayishBlue);
-  border-bottom: 3px solid transparent; /* invisible by default */
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s;
 }
 
 nav a:hover {
@@ -43,6 +44,7 @@ nav a:hover {
   border: 3px solid transparent;
   border-radius: 50%;
   cursor: pointer;
+  transition: all 0.3s;
 }
 
 .avatar:hover {
