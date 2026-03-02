@@ -1,0 +1,11 @@
+.main {
+  width: 25%;
+}
+
+.controlsCont {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 1em;
+  gap: 20px;
+}

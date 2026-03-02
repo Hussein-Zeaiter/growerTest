@@ -18,17 +18,7 @@ function CartList() {
         <>
           <div className={styles.content}>
             <ul>
-              {[
-                ...items,
-                ...items,
-                ...items,
-                ...items,
-                ...items,
-                ...items,
-                ...items,
-                ...items,
-                ...items,
-              ].map((item) => {
+              {items.map((item) => {
                 return <CartItem item={item} key={item.id} />;
               })}
             </ul>

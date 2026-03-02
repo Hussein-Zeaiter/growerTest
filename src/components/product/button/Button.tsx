@@ -4,6 +4,11 @@ import styles from "./Button.module.css";
 
 type ButtonType = "checkout" | "add";
 
+interface ButtonProps {
+  type: ButtonType;
+  onClick?: () => void;
+}
+
 const BUTTON_CONTENT: Record<ButtonType, JSX.Element> = {
   add: (
     <>
@@ -15,8 +20,12 @@ const BUTTON_CONTENT: Record<ButtonType, JSX.Element> = {
   checkout: <>Checkout</>,
 };
 
-function Button({ type }: { type: ButtonType }) {
-  return <button className={styles.pButton}>{BUTTON_CONTENT[type]}</button>;
+function Button({ type, onClick }: ButtonProps) {
+  return (
+    <button className={styles.pButton} onClick={onClick}>
+      {BUTTON_CONTENT[type]}
+    </button>
+  );
 }
 
 export default Button;
